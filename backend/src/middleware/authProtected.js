@@ -1,12 +1,20 @@
  const jwt = require('jsonwebtoken')
+const blackListModel = require('../models/blackListModel')
 
-function UserMiddleware( req,res,next){
+async function UserMiddleware( req,res,next ){
    
     const token = req.cookies.token 
     
     if(!token){
         return res.status(401).json({
             message: "Token not provided"
+        })
+    }
+    const isTokenBlacklisted = await blackListModel.findOne({ token})
+
+    if(isTokenBlacklisted){
+        return res.status(401).json({
+            message:'Token is invalid '
         })
     }
 

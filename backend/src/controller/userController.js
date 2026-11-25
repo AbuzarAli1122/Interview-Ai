@@ -82,6 +82,7 @@ const tokenBlackList = require ('../models/blackListModel')
  const loginUser = async (req,res) =>{
     try{
         const { email , password } = req.body
+
      if( !email || !password){
             return res.status(400).json({
                 success: false,
@@ -92,6 +93,7 @@ const tokenBlackList = require ('../models/blackListModel')
         const user = await userModel.findOne({email})
         if(!user){
             return res.status(400).json({
+                success: false,
                 message:'Invalid email or password'
             })
         }
@@ -116,8 +118,8 @@ const tokenBlackList = require ('../models/blackListModel')
 
         res.cookie('token',token, {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'strict',
+            secure: true,
+            sameSite: 'none',
             maxAge: 24 * 60 * 60 * 1000
         })
 
