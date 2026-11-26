@@ -5,6 +5,7 @@ import "../auth.form.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../services/auth.api";
 import { toast } from "react-toastify";
+import Loading from "../../../pages/Loading";
 
 const Register = () => {
 
@@ -56,6 +57,12 @@ const Register = () => {
   }
 
   return (
+    <>
+     
+     {isLoading && (
+        <Loading message="Creating your acc..." />
+      )}
+
     <main className="auth-page">
       <div className="form-container">
 
@@ -105,7 +112,7 @@ const Register = () => {
               <button
                 type="button"
                 className="password-toggle"
-                onClick={() => setShowPassword(!showPassword)}
+                onClick={() => setShowPassword(prev => !prev)}
               >
                 {showPassword ? "Hide" : "Show"}
               </button>
@@ -113,8 +120,8 @@ const Register = () => {
           </div>
 
 
-          <button type="submit" className="button primary-button">
-            {isLoading ? "Creating..." : "Create Account"}
+          <button type="submit" className="button primary-button"  disabled={isLoading}>
+           Create Account
           </button>
         </form>
 
@@ -125,6 +132,7 @@ const Register = () => {
 
       </div>
     </main>
+    </>
   );
 };
 

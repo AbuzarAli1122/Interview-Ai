@@ -7,7 +7,7 @@ export const registerUser = createAsyncThunk(
     "/auth/register",
     async( userData, {rejectWithValue}) =>{
         try{
-            const response = await axiosInstance.post('/register',userData)
+            const response = await axiosInstance.post('/auth/register',userData)
             return response.data
         }
         catch(error){
@@ -24,7 +24,7 @@ export const loginUser = createAsyncThunk(
   async (credentials, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.post(
-        "/login",
+        "/auth/login",
         credentials
       );
 
@@ -43,7 +43,7 @@ export const logoutUser = createAsyncThunk(
   "auth/logout",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.post("/logout");
+      const response = await axiosInstance.post("/auth/logout");
 
       return response.data;
     } catch (error) {
@@ -59,7 +59,7 @@ export const getProfile = createAsyncThunk(
   "auth/getProfile",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.get("/getprofile");
+      const response = await axiosInstance.get("/auth/get-me");
 
       return response.data;
     } catch (error) {

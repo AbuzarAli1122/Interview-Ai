@@ -5,6 +5,7 @@ import "../auth.form.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../services/auth.api.js";
 import { toast } from "react-toastify";
+import Loading from "../../../pages/Loading.jsx";
 
 
 const Login = () => {
@@ -49,6 +50,11 @@ const Login = () => {
   }
 
   return (
+    <>
+     {isLoading && (
+        <Loading message="Signing you in..." />
+      )}
+
     <main className="auth-page">
       <div className="form-container">
 
@@ -67,6 +73,7 @@ const Login = () => {
               placeholder="Enter your email"
               value={formData.email}
               onChange={handleChange}
+              required
             />
           </div>
 
@@ -81,12 +88,13 @@ const Login = () => {
                 placeholder="Enter your password"
                 value={formData.password}
                 onChange={handleChange}
+                required
               />
 
               <button
                 type="button"
                 className="password-toggle"
-                onClick={() => setShowPassword(!showPassword)}
+                onClick={() => setShowPassword(prev => !prev)}
               >
                 {showPassword ? "Hide" : "Show"}
               </button>
@@ -95,7 +103,7 @@ const Login = () => {
 
 
           <button type="submit" className="button primary-button " disabled={isLoading}>
-           {isLoading ? "Logging in..." : "Login"}
+           Login
           </button>
         </form>
 
@@ -106,6 +114,7 @@ const Login = () => {
 
       </div>
     </main>
+    </>
   );
 };
 

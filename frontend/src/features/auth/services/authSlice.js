@@ -8,11 +8,12 @@ import {
 } from './auth.api.js'
 
 const initialState = {
-    user:null,
+    user: null,
     isAuthenticated: false,
+    isInitialized: false,
     isLoading: false,
-    error:null,
-    message:null
+    error: null,
+    message: null
 }
 
 const authSlice = createSlice({
@@ -54,6 +55,7 @@ const authSlice = createSlice({
       .addCase(loginUser.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isAuthenticated = true;
+        state.isInitialized= true;
         state.user = action.payload.user;
         state.message = action.payload.message;
       })
@@ -71,6 +73,7 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.user = null;
         state.isAuthenticated = false;
+        state.isInitialized= true;
         state.message = "Logged out successfully";
       })
       .addCase(logoutUser.rejected, (state, action) => {
@@ -85,11 +88,13 @@ const authSlice = createSlice({
       })
       .addCase(getProfile.fulfilled, (state, action) => {
         state.isLoading = false;
+         state.isInitialized = true;
         state.user = action.payload.user;
         state.isAuthenticated = true;
       })
       .addCase(getProfile.rejected, (state, action) => {
         state.isLoading = false;
+        state.isInitialized = true;
         state.user = null;
         state.isAuthenticated = false;
         state.error = action.payload;
